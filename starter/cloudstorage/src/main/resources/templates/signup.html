@@ -14,7 +14,7 @@
                 </label>
             </div>
             <h1 class="display-5">Sign Up</h1>
-            <form th:action="@{/api/register}" method="POST">
+            <form th:action="@{/api/user/register}" method="POST">
                 <div class="alert alert-dark" th:if="${success}">
                     You successfully signed up! Please continue to the <a th:href="@{/login}">login</a> page.
                 </div>

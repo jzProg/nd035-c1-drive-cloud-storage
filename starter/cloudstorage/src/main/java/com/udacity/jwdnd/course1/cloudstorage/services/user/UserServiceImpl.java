@@ -24,6 +24,11 @@ public class UserServiceImpl implements UserService {
     private HashService hashService;
 
     @Override
+    public User getUser(String username) {
+        return userMapper.getUser(username);
+    }
+
+    @Override
     public int createNewUser(User user) throws UsernameExistsException {
         if (!isUsernameAvailable(user.getUsername())) {
             throw new UsernameExistsException("Username exists...Please use another one", null);
