@@ -1,6 +1,5 @@
 package com.udacity.jwdnd.course1.cloudstorage.services.user;
 
-import com.udacity.jwdnd.course1.cloudstorage.exceptions.InvalidCredentialsException;
 import com.udacity.jwdnd.course1.cloudstorage.exceptions.UsernameExistsException;
 import com.udacity.jwdnd.course1.cloudstorage.mapper.UserMapper;
 import com.udacity.jwdnd.course1.cloudstorage.model.User;
@@ -33,15 +32,6 @@ public class UserServiceImpl implements UserService {
         return userMapper.insert(user);
     }
 
-    @Override
-    public User loginUser(User user) throws InvalidCredentialsException {
-        User storedUser = userMapper.getUser(user.getUsername());
-        if (storedUser == null || !passwordsMatch(storedUser, user.getPassword())) {
-            throw new InvalidCredentialsException("Invalid username or password", null);
-        }
-        return storedUser;
-    }
-
     private boolean isUsernameAvailable(String username) {
         return userMapper.getUser(username) == null;
     }
@@ -53,10 +43,5 @@ public class UserServiceImpl implements UserService {
         String encodedSalt = Base64.getEncoder().encodeToString(salt);
         user.setSalt(encodedSalt);
         user.setPassword(hashService.getHashedValue(user.getPassword(), encodedSalt));
-    }
-
-    private boolean passwordsMatch(User storedUser, String inputPassword) {
-        String encodedSalt = storedUser.getSalt();
-        return storedUser.getPassword().equals(hashService.getHashedValue(inputPassword, encodedSalt));
     }
 }
