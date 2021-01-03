@@ -19,18 +19,16 @@ public class NoteController {
     @GetMapping("/deleteNote")
     public String deleteNote(@RequestParam(value = "noteId") Integer noteId, Model model) {
         int rows = noteService.deleteNote(noteId);
-        if (rows < 0) {
-            model.addAttribute("error", true);
-        }
+        boolean error = rows < 0;
+        model.addAttribute("error", error);
         return "result";
     }
 
     @PostMapping("/addNote")
     public String addNote(@ModelAttribute Note note, Model model, Authentication authentication) {
         int rows = noteService.addNote(note, authentication.getName());
-        if (rows < 0) {
-            model.addAttribute("error", true);
-        }
+        boolean error = rows < 0;
+        model.addAttribute("error", error);
         return "result";
     }
 }

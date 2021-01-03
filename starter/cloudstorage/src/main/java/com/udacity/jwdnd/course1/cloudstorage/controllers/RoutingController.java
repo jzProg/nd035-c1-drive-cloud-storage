@@ -3,6 +3,7 @@ package com.udacity.jwdnd.course1.cloudstorage.controllers;
 import com.udacity.jwdnd.course1.cloudstorage.model.Credential;
 import com.udacity.jwdnd.course1.cloudstorage.services.EncryptionService;
 import com.udacity.jwdnd.course1.cloudstorage.services.credential.CredentialService;
+import com.udacity.jwdnd.course1.cloudstorage.services.file.FileService;
 import org.springframework.security.core.Authentication;
 import com.udacity.jwdnd.course1.cloudstorage.services.note.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,9 @@ import java.util.List;
 
 @Controller
 public class RoutingController {
+
+    @Autowired
+    private FileService fileService;
 
     @Autowired
     private NoteService noteService;
@@ -31,6 +35,7 @@ public class RoutingController {
 
     @GetMapping("/home")
     private String home(Model model, Authentication authentication) {
+        model.addAttribute("files", fileService.getFiles(authentication.getName()));
         model.addAttribute("notes", noteService.fetchAllNotes(authentication.getName()));
         List<Credential> credentials = credentialService.fetchAllCredentials(authentication.getName());
         for (Credential cred: credentials) {

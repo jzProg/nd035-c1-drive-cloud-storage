@@ -18,18 +18,16 @@ public class CredentialController {
     @GetMapping("/deleteCredential")
     public String deleteCredential(@RequestParam(value = "credentialId") Integer credentialId, Model model) {
         int rows = credentialService.deleteCredential(credentialId);
-        if (rows < 0) {
-            model.addAttribute("error", true);
-        }
+        boolean error = rows < 0;
+        model.addAttribute("error", error);
         return "result";
     }
 
     @PostMapping("/addCredential")
     public String addCredential(@ModelAttribute Credential credential, Model model, Authentication authentication) {
         int rows = credentialService.addCredential(credential, authentication.getName());
-        if (rows < 0) {
-            model.addAttribute("error", true);
-        }
+        boolean error = rows < 0;
+        model.addAttribute("error", error);
         return "result";
     }
 }
