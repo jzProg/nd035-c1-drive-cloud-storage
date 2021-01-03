@@ -15,8 +15,8 @@
             </div>
             <h1 class="display-5">Sign Up</h1>
             <form th:action="@{/api/user/register}" method="POST">
-                <div class="alert alert-dark" th:if="${success}">
-                    You successfully signed up! Please continue to the <a th:href="@{/login}">login</a> page.
+                <div class="alert alert-dark" th:if="${success}" id = "signupText">
+                    You successfully signed up! Please continue to the <a id="goToLoginBtn" th:href="@{/login}">login</a> page.
                 </div>
                 <div class="alert alert-danger" th:if="${error != null}">
                     <span th:text="${error}"></span>

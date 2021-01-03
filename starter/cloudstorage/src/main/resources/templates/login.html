@@ -13,7 +13,7 @@
                 <div class="alert alert-danger" th:if="${param.error != null}">
                     Invalid username or password
                 </div>
-                <div class="alert alert-dark" th:if="${param.logout != null}">
+                <div id = "logoutText" class="alert alert-dark" th:if="${param.logout != null}">
                     You have been logged out
                 </div>
                 <div class="form-group">
