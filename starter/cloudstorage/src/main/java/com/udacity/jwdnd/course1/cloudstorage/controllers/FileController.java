@@ -8,13 +8,15 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
-
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.IOException;
 
+@ControllerAdvice
 @Controller
 @RequestMapping("api/file")
-public class FileController {
+public class FileController  {
 
     @Autowired
     private FileService fileService;
@@ -48,5 +50,12 @@ public class FileController {
     @GetMapping(value = "/getFile/{fileName}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     public @ResponseBody byte[] getFile(@PathVariable String fileName, Authentication authentication) {
         return fileService.getFile(fileName, authentication.getName()).getFileData();
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public String handleMaxSizeException(RedirectAttributes attributes) {
+        attributes.addFlashAttribute("error", true);
+        attributes.addFlashAttribute("errorMessage", "File too large!");
+        return "redirect:/result";
     }
 }

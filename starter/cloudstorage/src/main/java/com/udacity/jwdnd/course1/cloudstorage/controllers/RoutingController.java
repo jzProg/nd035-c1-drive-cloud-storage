@@ -49,4 +49,9 @@ public class RoutingController {
     private String signup() {
         return "signup.html";
     }
+
+    @GetMapping("/result")
+    private String result() {
+        return "result.html";
+    }
 }
